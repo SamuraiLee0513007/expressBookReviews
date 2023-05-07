@@ -67,7 +67,7 @@ public_users.get('/title/:title',function (req, res) {
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
   const isbn = req.params.isbn;
-  res.send(books[isbn]["reviews"])
+  res.send(books[isbn]["reviews"]);
   
 });
 public_users.get('/books',function (req, res) {
