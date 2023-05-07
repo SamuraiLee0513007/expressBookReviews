@@ -46,7 +46,7 @@ public_users.get('/author/:author',function (req, res) {
                           "reviews":books[isbn]["reviews"]});
     }
   });
-  res.send(JSON.stringify({booksbyauthor}, null, 4));
+  res.send(JSON.stringify(booksbyauthor, null, 4));
 });
 
 // Get all books based on title
@@ -61,7 +61,7 @@ public_users.get('/title/:title',function (req, res) {
                           "reviews":books[isbn]["reviews"]});
     }
   });
-  res.send(JSON.stringify({booksbytitle}, null, 4));
+  res.send(JSON.stringify(booksbytitle, null, 4));
 });
 
 //  Get book review
@@ -101,23 +101,25 @@ public_users.get('/books',function (req, res) {
           }
         }));
       });
-
-      get_books.then(res.send(JSON.stringify({booksbyauthor}, null, 4)));
+      const output = new Promise((resolve, reject) =>{resolve(res.send(JSON.stringify(booksbyauthor, null, 4)))});
+      get_books.then(()=>console.log("Result is ready"));
+      output.then(()=>console.log("Promise for Task 12 resolved"));
   });
   public_users.get('/books/title/:title',function (req, res) {
     //Write your code here
     let booksbytitle = [];
     let isbns = Object.keys(books);
     const get_books = new Promise((resolve, reject) => {
-        resolve( isbns.forEach((isbn) => {
-            if(books[isbn]["title"] === req.params.title) {
-              booksbytitle.push({"isbn":isbn,
+        resolve(isbns.forEach((isbn) => {
+          if(books[isbn]["title"] === req.params.title) {
+            booksbytitle.push({"isbn":isbn,
                                 "author":books[isbn]["author"],
                                 "reviews":books[isbn]["reviews"]});
-               }
+          }
         }));
       });
-
-      get_books.then(res.send(JSON.stringify({booksbytitle}, null, 4)));
+      const output = new Promise((resolve, reject) =>{resolve(res.send(JSON.stringify(booksbytitle, null, 4)))});
+      get_books.then(()=>console.log("Result is ready"));
+      output.then(()=>console.log("Promise for Task 13 resolved"));
   });
 module.exports.general = public_users;
